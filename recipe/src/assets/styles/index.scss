@@ -1,0 +1,24 @@
+// CSS resets
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  text-decoration: none;
+}
+body {
+  font-family: tahoma;
+}
+// preloader
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+}
+// Styles
+@import "details";
+@import "searchBar";
+@import "recipeCard";
