@@ -6,9 +6,10 @@
   box-sizing: border-box;
   outline: none;
   text-decoration: none;
+  border: none;
 }
 a {
-  text-decoration: none;
+  text-decoration: none !important;
   color: inherit;
 }
 body {

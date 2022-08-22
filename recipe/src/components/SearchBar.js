@@ -50,7 +50,7 @@ const SearchBar = () => {
           <Loading />
         </div>
       ) : (
-        <div className="result-section">
+        <div className="container d-flex flex-wrap justify-content-center col-9 mx-auto my-5">
           {foods != null ? (
             foods.map((item) => <RecipeCard key={item.idMeal} data={item} />)
           ) : (
