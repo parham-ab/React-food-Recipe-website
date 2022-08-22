@@ -1,31 +1,33 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 // icons
 import { GoSearch } from "react-icons/go";
 // components
 import RecipeCard from "./RecipeCard";
 import Loading from "./Loading";
+import { searchApi } from "../services/searchApi";
 
 const SearchBar = () => {
   const [foods, setFoods] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [loading, setLoading] = useState(false);
-  const BASE_URL = `https://www.themealdb.com/api/json/v1/1/search.php?s=${inputValue}`;
-
-  const loadPost = async () => {
-    setLoading(true);
-    const response = await axios.get(BASE_URL);
-    setFoods(response.data.meals);
-    setLoading(false);
+  // fetch API
+  const getDetails = async () => {
+    try {
+      setLoading(true);
+      const { data } = await searchApi(`${inputValue}`);
+      setFoods(data.meals);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
-
   useEffect(() => {
-    loadPost();
+    getDetails();
   }, []);
-  //   submitHandler
+  // submitHandler
   const submitHandler = async (e) => {
     e.preventDefault();
-    loadPost();
+    getDetails();
     // clear input
     setInputValue("");
   };

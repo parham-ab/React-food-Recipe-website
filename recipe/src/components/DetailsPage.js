@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 // icons
 import { FiHome } from "react-icons/fi";
@@ -7,20 +6,25 @@ import { FiHome } from "react-icons/fi";
 import ReactPlayer from "react-player";
 // components
 import Loading from "./Loading";
+import { searchApiDetails } from "../services/searchApiDetails";
 
 const DetailsPage = () => {
   const id = useParams().id;
   const [foodDetails, setFoodDetails] = useState([]);
   const [loading, setLoading] = useState(false);
-  const BASE_URL = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
-  const loadPost = async () => {
-    setLoading(true);
-    const response = await axios.get(BASE_URL);
-    setFoodDetails(response.data.meals[0]);
-    setLoading(false);
-  };
+
   useEffect(() => {
-    loadPost();
+    const getDetails = async () => {
+      try {
+        setLoading(true);
+        const { data } = await searchApiDetails(`${id}`);
+        setFoodDetails(data.meals[0]);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getDetails();
   }, []);
 
   return (
