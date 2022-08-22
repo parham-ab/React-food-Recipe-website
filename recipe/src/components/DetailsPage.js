@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 // icons
-import { FiHome } from "react-icons/fi";
+import { IoChevronBack } from "react-icons/io5";
+import { AiOutlineInfoCircle } from "react-icons/ai";
 // react video player
 import ReactPlayer from "react-player";
 // components
@@ -185,26 +186,23 @@ const DetailsPage = () => {
                   </>
                 )}
               </p>
-              <div className="icons-container">
-                <Link to="/foods">
-                  <FiHome /> <p>Back</p>
-                </Link>
-              </div>
+              <Link to="/foods">
+                <IoChevronBack /> Back
+              </Link>
             </div>
           </div>
 
           <div className="other-info">
             <div className="instructions">
-              <span>Instructions: </span>
+              <div className="d-flex align-items-center">
+                <span className="p-1">
+                  <AiOutlineInfoCircle />
+                </span>
+                <span>Instructions:</span>
+              </div>
               <p>{foodDetails.strInstructions}</p>
               {foodDetails.strYoutube && (
-                <div
-                  style={{
-                    margin: "20px",
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
-                >
+                <div className="d-flex justify-content-center">
                   <ReactPlayer
                     url={foodDetails.strYoutube}
                     controls
