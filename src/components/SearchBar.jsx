@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from "react";
-// icons
+import { useEffect, useState, useCallback } from "react";
 import { GoSearch } from "react-icons/go";
-// components
 import RecipeCard from "./RecipeCard";
 import Loading from "./Loading";
 import { searchApi } from "../services/searchApi";
@@ -10,30 +8,35 @@ const SearchBar = () => {
   const [foods, setFoods] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [loading, setLoading] = useState(false);
-  // fetch API
-  const getDetails = async () => {
+  const [error, setError] = useState(false);
+
+  const getDetails = useCallback(async (query) => {
     try {
       setLoading(true);
-      const { data } = await searchApi(`${inputValue}`);
-      setFoods(data.meals);
+      setError(false);
+      const { data } = await searchApi(query);
+      setFoods(data.meals || []);
+    } catch (err) {
+      console.error(err);
+      setError(true);
+      setFoods([]);
+    } finally {
       setLoading(false);
-    } catch (error) {
-      console.log(error);
     }
-  };
-  useEffect(() => {
-    getDetails();
   }, []);
-  // submitHandler
-  const submitHandler = async (e) => {
+
+  useEffect(() => {
+    getDetails("chicken");
+  }, [getDetails]);
+
+  const submitHandler = (e) => {
     e.preventDefault();
-    getDetails();
-    // clear input
-    setInputValue("");
+    if (!inputValue.trim()) return;
+    getDetails(inputValue.trim());
   };
 
   return (
-    <div>
+    <div className="search-page">
       <form onSubmit={submitHandler} className="searchFood-container">
         <div className="search-section">
           <input
@@ -41,22 +44,26 @@ const SearchBar = () => {
             placeholder="Search for a food..."
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
+            aria-label="Search for a food"
           />
-          <button type="submit">
+          <button type="submit" aria-label="Search">
             <GoSearch />
           </button>
         </div>
       </form>
+
       {loading ? (
         <div className="loading-container">
           <Loading />
         </div>
       ) : (
-        <div className="container d-flex flex-wrap justify-content-center col-9 mx-auto my-5">
-          {foods != null ? (
+        <div className="container result-section d-flex flex-wrap justify-content-center col-11 col-md-9 mx-auto my-5">
+          {error ? (
+            <h1 className="error-txt">Something went wrong 😥</h1>
+          ) : foods && foods.length > 0 ? (
             foods.map((item) => <RecipeCard key={item.idMeal} data={item} />)
           ) : (
-            <h1 className="error-txt">Not Found! 😥</h1>
+            <h1 className="error-txt">No recipes found 😥</h1>
           )}
         </div>
       )}

@@ -1,11 +1,8 @@
-import React from "react";
-// img (preloader)
-import loading from "../assets/img/loading.gif";
-
 const Loading = () => {
   return (
-    <div>
-      <img src={loading} alt="Loading" />
+    <div className="loading-spinner" role="status" aria-live="polite">
+      <span className="spinner" />
+      <span className="visually-hidden">Loading...</span>
     </div>
   );
 };

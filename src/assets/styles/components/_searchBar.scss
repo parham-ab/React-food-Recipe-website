@@ -1,59 +1,79 @@
 .searchFood-container {
-  // preloader
-  .loader {
-    display: flex;
-    justify-content: center;
-  }
+  display: flex;
+  justify-content: center;
+  margin: 3rem auto 1rem;
 
-  // ---------search section---------
   .search-section {
     display: flex;
-    margin: 100px auto;
-    justify-content: center;
     align-items: center;
-    position: relative;
+    width: 100%;
+    max-width: 520px;
+    background: #fff;
+    border-radius: 50px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    padding: 0.4rem 0.4rem 0.4rem 1.4rem;
+    transition: box-shadow 0.2s ease;
 
-    // input
+    &:focus-within {
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.14);
+    }
+
     input {
-      width: 300px;
-      padding: 10px;
-      font-size: 1rem;
-      border-radius: 10px;
+      flex: 1;
       border: none;
-      background-color: #ebebeb;
-      box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
-      transition: all 0.2s;
+      outline: none;
+      font-size: 1rem;
+      background: transparent;
+      padding: 0.5rem 0;
 
-      @media screen and (max-width: 300px) {
-        width: fit-content;
-
-        &:focus {
-          box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-          background-color: #fff;
-          transition: all 0.2s ease;
-        }
-      }
-
-      @media screen and (min-width: 300px) {
-        &:focus {
-          box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-          background-color: #fff;
-          transition: all 0.2s ease;
-          width: 310px;
-        }
+      &::placeholder {
+        color: #999;
       }
     }
 
-    // search icon
     button {
-      background-color: transparent;
       border: none;
+      outline: none;
+      background: #ff6b35;
+      color: #fff;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition:
+        background 0.2s ease,
+        transform 0.15s ease;
 
-      svg {
-        font-size: 1.5rem;
-        cursor: pointer;
-        color: #969696;
+      &:hover {
+        background: darken(#ff6b35, 8%);
+      }
+
+      &:active {
+        transform: scale(0.93);
       }
     }
   }
+}
+
+.loading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40vh;
+}
+
+.result-section {
+  gap: 1.5rem;
+}
+
+.error-txt {
+  width: 100%;
+  text-align: center;
+  margin-top: 3rem;
+  font-size: 1.4rem;
+  color: #777;
 }

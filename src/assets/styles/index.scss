@@ -5,10 +5,23 @@
 @import "./global/scrollbar";
 @import "./global/bootstrap";
 
-// preloader
-.loading-container {
+.loading-spinner {
   display: flex;
-  justify-content: center;
   align-items: center;
-  min-height: 70vh;
+  justify-content: center;
+
+  .spinner {
+    width: 48px;
+    height: 48px;
+    border: 4px solid #fff1ea;
+    border-top-color: #ff6b35;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }

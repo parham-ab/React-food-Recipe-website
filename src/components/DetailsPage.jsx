@@ -1,224 +1,137 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-// icons
 import { IoChevronBack } from "react-icons/io5";
 import { AiOutlineInfoCircle } from "react-icons/ai";
-// react video player
 import ReactPlayer from "react-player";
-// components
 import Loading from "./Loading";
 import { searchApiDetails } from "../services/searchApiDetails";
 
 const DetailsPage = () => {
-  const id = useParams().id;
-  const [foodDetails, setFoodDetails] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const { id } = useParams();
+  const [foodDetails, setFoodDetails] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const getDetails = async () => {
       try {
         setLoading(true);
-        const { data } = await searchApiDetails(`${id}`);
-        setFoodDetails(data.meals[0]);
+        setError(false);
+        const { data } = await searchApiDetails(id);
+        setFoodDetails(data.meals ? data.meals[0] : null);
+      } catch (err) {
+        console.error(err);
+        setError(true);
+      } finally {
         setLoading(false);
-      } catch (error) {
-        console.log(error);
       }
     };
     getDetails();
-  }, []);
+  }, [id]);
+
+  const getIngredients = (meal) => {
+    if (!meal) return [];
+    const ingredients = [];
+    for (let i = 1; i <= 20; i++) {
+      const ingredient = meal[`strIngredient${i}`];
+      const measure = meal[`strMeasure${i}`];
+      if (ingredient && ingredient.trim()) {
+        ingredients.push({
+          id: i,
+          name: ingredient,
+          measure: measure?.trim() || "",
+        });
+      }
+    }
+    return ingredients;
+  };
+
+  if (loading) {
+    return (
+      <div className="loading-container">
+        <Loading />
+      </div>
+    );
+  }
+
+  if (error || !foodDetails) {
+    return (
+      <div className="food-container">
+        <div className="container text-center py-5">
+          <h1 className="error-txt">Recipe not found 😥</h1>
+          <Link to="/foods" className="back-link mt-3 d-inline-flex">
+            <IoChevronBack /> Back to recipes
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  const ingredients = getIngredients(foodDetails);
 
   return (
     <div className="food-container">
-      {!loading ? (
-        <div className="container">
-          <div className="main-info">
-            <img src={foodDetails.strMealThumb} alt={foodDetails.idMeal} />
+      <div className="container">
+        <Link to="/foods" className="back-link">
+          <IoChevronBack /> Back
+        </Link>
 
-            <p className="food-name">{foodDetails.strMeal}</p>
-            <p>
-              <span>Category: </span>
-              {foodDetails.strCategory}
-            </p>
-            <p>
-              <span>Country: </span>
-              {foodDetails.strArea}
-            </p>
-            <div className="ingredients">
-              <span>Ingredients:</span>
-              <p>
-                {foodDetails.strIngredient1 && (
-                  <>
-                    {foodDetails.strIngredient1} 👉 {foodDetails.strMeasure1}
-                  </>
-                )}
-              </p>
-              <p>
-                {foodDetails.strIngredient2 && (
-                  <>
-                    {foodDetails.strIngredient2} 👉 {foodDetails.strMeasure2}
-                  </>
-                )}
-              </p>
-              <p>
-                {foodDetails.strIngredient3 && (
-                  <>
-                    {foodDetails.strIngredient3} 👉 {foodDetails.strMeasure3}
-                  </>
-                )}
-              </p>
-              <p>
-                {foodDetails.strIngredient4 && (
-                  <>
-                    {foodDetails.strIngredient4} 👉 {foodDetails.strMeasure4}
-                  </>
-                )}
-              </p>
-              <p>
-                {foodDetails.strIngredient5 && (
-                  <>
-                    {foodDetails.strIngredient5} 👉 {foodDetails.strMeasure5}
-                  </>
-                )}
-              </p>
-              <p>
-                {foodDetails.strIngredient6 && (
-                  <>
-                    {foodDetails.strIngredient6} 👉 {foodDetails.strMeasure6}
-                  </>
-                )}
-              </p>
-              <p>
-                {foodDetails.strIngredient7 && (
-                  <>
-                    {foodDetails.strIngredient7} 👉 {foodDetails.strMeasure7}
-                  </>
-                )}
-              </p>
-              <p>
-                {foodDetails.strIngredient8 && (
-                  <>
-                    {foodDetails.strIngredient8} 👉 {foodDetails.strMeasure8}
-                  </>
-                )}
-              </p>
-              <p>
-                {foodDetails.strIngredient9 && (
-                  <>
-                    {foodDetails.strIngredient9} 👉 {foodDetails.strMeasure9}
-                  </>
-                )}
-              </p>
-              <p>
-                {foodDetails.strIngredient10 && (
-                  <>
-                    {foodDetails.strIngredient10} 👉 {foodDetails.strMeasure10}
-                  </>
-                )}
-              </p>
-              <p>
-                {foodDetails.strIngredient11 && (
-                  <>
-                    {foodDetails.strIngredient11} 👉 {foodDetails.strMeasure11}
-                  </>
-                )}
-              </p>
-              <p>
-                {foodDetails.strIngredient12 && (
-                  <>
-                    {foodDetails.strIngredient12} 👉 {foodDetails.strMeasure12}
-                  </>
-                )}
-              </p>
-              <p>
-                {foodDetails.strIngredient13 && (
-                  <>
-                    {foodDetails.strIngredient13} 👉 {foodDetails.strMeasure13}
-                  </>
-                )}
-              </p>
-              <p>
-                {foodDetails.strIngredient14 && (
-                  <>
-                    {foodDetails.strIngredient14} 👉 {foodDetails.strMeasure14}
-                  </>
-                )}
-              </p>
-              <p>
-                {foodDetails.strIngredient15 && (
-                  <>
-                    {foodDetails.strIngredient15} 👉 {foodDetails.strMeasure15}
-                  </>
-                )}
-              </p>
-              <p>
-                {foodDetails.strIngredient16 && (
-                  <>
-                    {foodDetails.strIngredient16} 👉 {foodDetails.strMeasure16}
-                  </>
-                )}
-              </p>
-              <p>
-                {foodDetails.strIngredient17 && (
-                  <>
-                    {foodDetails.strIngredient17} 👉 {foodDetails.strMeasure17}
-                  </>
-                )}
-              </p>
-              <p>
-                {foodDetails.strIngredient18 && (
-                  <>
-                    {foodDetails.strIngredient18} 👉 {foodDetails.strMeasure18}
-                  </>
-                )}
-              </p>
-              <p>
-                {foodDetails.strIngredient19 && (
-                  <>
-                    {foodDetails.strIngredient19} 👉 {foodDetails.strMeasure19}
-                  </>
-                )}
-              </p>
-              <p>
-                {foodDetails.strIngredient20 && (
-                  <>
-                    {foodDetails.strIngredient20} 👉 {foodDetails.strMeasure20}
-                  </>
-                )}
-              </p>
-              <Link to="/foods">
-                <IoChevronBack /> Back
-              </Link>
+        <div className="row g-4 main-info">
+          <div className="col-12 col-lg-5">
+            <div className="food-img-wrap">
+              <img src={foodDetails.strMealThumb} alt={foodDetails.strMeal} />
             </div>
           </div>
 
-          <div className="other-info">
-            <div className="instructions">
-              <div className="d-flex align-items-center">
-                <span className="p-1">
-                  <AiOutlineInfoCircle />
-                </span>
-                <span>Instructions:</span>
-              </div>
-              <p>{foodDetails.strInstructions}</p>
-              {foodDetails.strYoutube && (
-                <div className="d-flex justify-content-center">
-                  <ReactPlayer
-                    url={foodDetails.strYoutube}
-                    controls
-                    width={480}
-                    height={240}
-                  />
-                </div>
+          <div className="col-12 col-lg-7">
+            <p className="food-name">{foodDetails.strMeal}</p>
+
+            <div className="meta-tags">
+              {foodDetails.strCategory && (
+                <span className="tag">{foodDetails.strCategory}</span>
+              )}
+              {foodDetails.strArea && (
+                <span className="tag tag-area">{foodDetails.strArea}</span>
               )}
             </div>
+
+            <div className="ingredients">
+              <span className="section-label">Ingredients</span>
+              <ul className="ingredients-list">
+                {ingredients.map((ing) => (
+                  <li key={ing.id}>
+                    <span className="ing-name">{ing.name}</span>
+                    {ing.measure && (
+                      <span className="ing-measure">{ing.measure}</span>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
-      ) : (
-        <div className="loading-container">
-          <Loading />
+
+        <div className="other-info">
+          <div className="instructions">
+            <div className="section-label d-flex align-items-center gap-2">
+              <AiOutlineInfoCircle />
+              <span>Instructions</span>
+            </div>
+            <p className="instructions-text">{foodDetails.strInstructions}</p>
+
+            {foodDetails.strYoutube && (
+              <div className="video-wrap">
+                <ReactPlayer
+                  url={foodDetails.strYoutube}
+                  controls
+                  width="100%"
+                  height="100%"
+                />
+              </div>
+            )}
+          </div>
         </div>
-      )}
+      </div>
     </div>
   );
 };
