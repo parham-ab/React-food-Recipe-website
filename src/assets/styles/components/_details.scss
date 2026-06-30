@@ -4,49 +4,59 @@
     color: #5c5c5c;
     font-weight: bold;
   }
+
   .container {
     display: flex;
-    margin: 0 auto;
     flex-direction: column;
     justify-content: center;
     margin: 0 auto;
+
     .main-info {
+      border-radius: 3px;
+      background-color: #d6d6d6;
+      padding: 0 0 10px 0;
+
       .food-name {
         font-size: 1.3rem;
         color: #0c54b3;
       }
-      border-radius: 3px;
-      background-color: #d6d6d6;
-      padding: 0 0 10px 0;
+
       img {
-        margin: 30px auto;
         display: flex;
         width: 300px;
+        margin: 30px auto;
         border-radius: 10px;
-        box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px,
+        box-shadow:
+          rgba(50, 50, 93, 0.25) 0px 30px 60px -12px,
           rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
       }
+
       p {
         padding: 5px 10px 0;
       }
-      @media screen and(max-width:'308px') {
+
+      @media screen and (max-width: 308px) {
         img {
           width: 200px;
         }
       }
     }
+
     .other-info {
       .instructions {
-        border: solid 1px silver;
         padding: 10px;
+        border: 1px solid silver;
         border-radius: 5px;
         background-color: #eeeeee;
+
         .youTube-container {
-          box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px,
+          box-shadow:
+            rgba(50, 50, 93, 0.25) 0px 30px 60px -12px,
             rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
         }
       }
     }
+
     .ingredients {
       padding: 10px;
     }

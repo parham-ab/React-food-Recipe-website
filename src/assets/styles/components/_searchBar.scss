@@ -4,6 +4,7 @@
     display: flex;
     justify-content: center;
   }
+
   // ---------search section---------
   .search-section {
     display: flex;
@@ -11,6 +12,7 @@
     justify-content: center;
     align-items: center;
     position: relative;
+
     // input
     input {
       width: 300px;
@@ -21,15 +23,18 @@
       background-color: #ebebeb;
       box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
       transition: all 0.2s;
-      @media screen and(max-width:300px) {
+
+      @media screen and (max-width: 300px) {
         width: fit-content;
+
         &:focus {
           box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
           background-color: #fff;
           transition: all 0.2s ease;
         }
       }
-      @media screen and(min-width:300px) {
+
+      @media screen and (min-width: 300px) {
         &:focus {
           box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
           background-color: #fff;
@@ -38,12 +43,13 @@
         }
       }
     }
+
     // search icon
     button {
       background-color: transparent;
       border: none;
+
       svg {
-        font-size: 1rem;
         font-size: 1.5rem;
         cursor: pointer;
         color: #969696;

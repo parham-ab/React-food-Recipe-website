@@ -1,3 +1,10 @@
+@import "./components/details";
+@import "./components/searchBar";
+@import "./global/fonts";
+@import "./global/reset";
+@import "./global/scrollbar";
+@import "./global/bootstrap";
+
 // preloader
 .loading-container {
   display: flex;
@@ -5,10 +12,3 @@
   align-items: center;
   min-height: 70vh;
 }
-// Styles
-@import "components/details";
-@import "components/searchBar";
-@import "global/fonts";
-@import "global/reset";
-@import "global/scrollbar";
-@import "global/bootstrap";
